@@ -16,7 +16,7 @@ const QrCodeScanner = () => {
   
     return(
         <div className={s.container}>
-            <p> {scanned}</p>
+            <p> Lägg QR code till skärmen</p>
             <Scanner allowMultiple
              onScan= {scanHandler}
              components={{audio: false,
@@ -24,6 +24,7 @@ const QrCodeScanner = () => {
              styles={{
                 container:{width:200, }}}
              />
+             <p className={s.result}>{scanned}</p>
         </div>
     );
 }

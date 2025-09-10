@@ -5,7 +5,7 @@ const Layout = () => {
   return(
   
    <div><QrCodeScanner/>
-    {<QrCodeGenerator/>}
+    {/*<QrCodeGenerator/>*/}
    </div>
   
     
