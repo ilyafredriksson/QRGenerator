@@ -4,7 +4,7 @@ import{Link} from 'react-router-dom'
 
 export const Navigation = () => {
   return (
-    <nav>
+    <nav style={{display:'flex',flexDirection:'column',gap:'10px',alignItems:'center',marginTop:'30px'}}>
       <Link to="/generate">Generate QR code</Link>
       <Link to="scan">Scan QR code</Link>
       <Link to="/">Scaning History</Link>
