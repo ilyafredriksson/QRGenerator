@@ -1,5 +1,27 @@
-.container{
-    display:flex;
-    justify-content: center;
-    gap:10px;
+/* src/components/Navigation/Navigation.module.css */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+}
+
+.link:hover {
+  color: #007bff;
+}
+
+.activeLink {
+  color: white;
+  background-color: #007bff;
+  padding: 6px 12px;
+  border-radius: 4px;
 }
