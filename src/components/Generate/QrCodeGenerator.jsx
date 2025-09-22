@@ -1,53 +1,48 @@
-import { QRCodeSVG } from "qrcode.react";
-import { useState } from "react";
-import s from "./qrCodeGenerator.module.css";
-import { GENERATE_DATA } from "../../constants";
+import { useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
+import { GENERATE_DATA } from '../../constants';
 
 const QrCodeGenerator = () => {
-  const [value, setValue] = useState("");
-  const [result, setResult] = useState("");
+  const [text, setText] = useState('');
+  const [generatedQr, setGeneratedQr] = useState('');
 
-  const onClickHandler = () => {
-    if (!value.trim()) return; // undvik tomma strängar
-
-    // Hämta tidigare historik
-    const prevData = JSON.parse(localStorage.getItem(GENERATE_DATA) || "[]");
-
-    // Lägg till nya värdet
-    const updated = [...prevData, value];
-
-    // Spara tillbaka i localStorage
-    localStorage.setItem(GENERATE_DATA, JSON.stringify(updated));
-
-    // Uppdatera state
-    setResult(value);
-    setValue("");
-  };
-
-  const onChangeHandler = (event) => {
-    setValue(event.target.value);
-    setResult(""); // ta bort tidigare visad QR om man börjar skriva ny text
+  const generateHandler = () => {
+    if (!text.trim()) return;
+    
+    setGeneratedQr(text);
+    
+    // Spara i historik
+    const prevData = JSON.parse(localStorage.getItem(GENERATE_DATA) || '[]');
+    const newData = {
+      text: text,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem(GENERATE_DATA, JSON.stringify([newData, ...prevData]));
   };
 
   return (
-    <div className={s.container}>
+    <div className="container">
+      <h2>Generera QR-kod</h2>
+      
       <input
         type="text"
-        value={value}
-        placeholder="Enter text"
-        onChange={onChangeHandler}
-        className={s.input}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Skriv text för QR-kod..."
+        className="input"
       />
-
-      <button type="button" className={s.button} onClick={onClickHandler}>
-        Generate QR
+      <button onClick={generateHandler} className="button">
+        Generera QR
       </button>
 
-      {result && (
-        <div className={s.qrWrapper}>
-          <QRCodeSVG value={result} size={200} />
-          <p>{result}</p>
+      {generatedQr && (
+        <div className="qrWrapper">
+          <QRCodeSVG value={generatedQr} size={200} />
         </div>
+      )}
+      
+      {generatedQr && (
+        <p className="result">{generatedQr}</p>
       )}
     </div>
   );

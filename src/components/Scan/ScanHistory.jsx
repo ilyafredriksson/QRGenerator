@@ -15,18 +15,27 @@ export const ScanHistory = () => {
   };
 
   return (
-    <div>
-      <h2>Scan History</h2>
+    <div className="container">
+      <h2>Scanning History</h2>
       {data.length === 0 ? (
-        <p>No scanned QR codes yet.</p>
+        <p className="empty">No scanned QR codes yet.</p>
       ) : (
         <>
-          <ul>
-            {data.map((text, index) => (
-              <li key={index}>{text}</li>
+          <ul className="list">
+            {data.map((item, index) => (
+              <li key={index} className="item">
+                <div className="text">{item.text}</div>
+                <img
+                  src={item.image}
+                  alt="qr"
+                  style={{ width: "80px", height: "80px", borderRadius: "10px" }}
+                />
+              </li>
             ))}
           </ul>
-          <button onClick={handleClear}>Clear History</button>
+          <button onClick={handleClear} className="clearBtn">
+            Clear History
+          </button>
         </>
       )}
     </div>

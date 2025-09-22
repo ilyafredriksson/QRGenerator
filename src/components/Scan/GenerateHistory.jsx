@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { QRCodeSVG } from 'qrcode.react';
 import { GENERATE_DATA } from "../../constants";
 
 export const GenerateHistory = () => {
@@ -15,18 +16,29 @@ export const GenerateHistory = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Generate History</h2>
       {data.length === 0 ? (
-        <p>No generated QR codes yet.</p>
+        <p className="empty">No generated QR codes yet.</p>
       ) : (
         <>
-          <ul>
-            {data.map((text, index) => (
-              <li key={index}>{text}</li>
+          <ul className="list">
+            {data.map((item, index) => (
+              <li key={index} className="item">
+                <div className="text">{item.text}</div>
+                <div className="qrWrapper" style={{ margin: 0, padding: '10px' }}>
+                  <QRCodeSVG 
+                    value={item.text} 
+                    size={80} 
+                    style={{ borderRadius: "10px" }}
+                  />
+                </div>
+              </li>
             ))}
           </ul>
-          <button onClick={handleClear}>Clear History</button>
+          <button onClick={handleClear} className="clearBtn">
+            Clear History
+          </button>
         </>
       )}
     </div>
