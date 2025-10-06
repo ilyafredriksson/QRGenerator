@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import { GENERATE_DATA } from '../../constants';
+import styles from './qrCodeGenerator.module.css';
 
 const QrCodeGenerator = () => {
   const [text, setText] = useState('');
@@ -20,8 +21,14 @@ const QrCodeGenerator = () => {
     localStorage.setItem(GENERATE_DATA, JSON.stringify([newData, ...prevData]));
   };
 
+  const copyToClipboard = () => {
+    if (generatedQr) {
+      navigator.clipboard.writeText(generatedQr);
+    }
+  };
+
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h2>Generera QR-kod</h2>
       
       <input
@@ -29,20 +36,25 @@ const QrCodeGenerator = () => {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Skriv text för QR-kod..."
-        className="input"
+        className={styles.input}
       />
-      <button onClick={generateHandler} className="button">
+      <button onClick={generateHandler} className={styles.button}>
         Generera QR
       </button>
 
       {generatedQr && (
-        <div className="qrWrapper">
+        <div className={styles.qrWrapper}>
           <QRCodeSVG value={generatedQr} size={200} />
         </div>
       )}
       
       {generatedQr && (
-        <p className="result">{generatedQr}</p>
+        <div className={styles.resultSection}>
+          <p className={styles.result}>{generatedQr}</p>
+          <button onClick={copyToClipboard} className={styles.copyButton}>
+            Kopiera text
+          </button>
+        </div>
       )}
     </div>
   );
